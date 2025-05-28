@@ -261,8 +261,41 @@ closePhoneModalBtn.addEventListener('click', () => {
     enviarDatos(telefonoIngresado);
 });
 
+// Botón "Siguiente" en Brand
+brandNextBtn.addEventListener('click', ()=>{
+    const select = document.getElementById('brand-select');
+    if (select && select.value) {
+        marcaSeleccionada = select.value;
+        brandModal.classList.remove('visible');
+        mostrarSourceModal();
+    } else alert('Selecciona una categoría');
+});
+// Terminar en Brand
+closeBrandBtn.addEventListener('click', ()=>{ cerrarModales(true); });
+// Botón "Siguiente" en Source
+sourceNextBtn.addEventListener('click', ()=>{
+    const select = document.getElementById('source-select');
+    if (select && select.value) {
+        fuenteSeleccionada = select.value;
+        sourceModal.classList.remove('visible');
+        mostrarPhoneModal();
+    } else alert('Selecciona una opción');
+});
+// Terminar en Source
+closeSourceBtn.addEventListener('click', ()=>{ cerrarModales(true); });
+// Confirmar Teléfono y enviar
+confirmPhoneBtn.addEventListener('click', ()=>{
+    clearTimeout(inactivityTimer);
+    telefonoIngresado = phoneInput.value.trim()||null;
+    phoneModal.classList.remove('visible');
+    enviarDatos(telefonoIngresado);
+});
+// Terminar en Phone
+closePhoneModalBtn.addEventListener('click', ()=>{ cerrarModales(true); });
 
-// Wake Lock\ nlet wakeLock = null;
+
+// Wake Lock\ n
+let wakeLock = null;
 async function activarWakeLock() {
     try { wakeLock = await navigator.wakeLock.request('screen'); }
     catch (err) { console.error('WakeLock error:', err); }
