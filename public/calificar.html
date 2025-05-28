@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/calificar.css">
+    <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="shortcut icon" href="https://tienda.anywayinsumos.com.ar/img/producto-1742-logo-1721508805.jpg" type="image/x-icon">
+    <title>Calificar Vendedor</title>
+</head>
+<body>
+
+    <button class="logotipo"><img id="logotipo" src="https://tienda.anywayinsumos.com.ar/img/producto-1742-logo-1721508805.jpg" alt="anyway-logo"></button>
+    <header>
+        <h1>¡No olvides calificar a !</h1>
+    </header>
+    <main>
+
+        <div class="vendedor-info" id="vendedor-display"></div>
+
+        <!-- Opciones de calificación -->
+        <div class="calificaciones">
+            <button class="rating-btn" data-rating="Mala">
+                <img src="https://cdn-icons-png.flaticon.com/512/743/743418.png" alt="Mala">
+                <p>Mala</p>
+            </button>
+            <button class="rating-btn" data-rating="Normal">
+                <img src="https://cdn-icons-png.flaticon.com/512/743/743321.png" alt="Normal">
+                <p>Normal</p>
+            </button>
+            <button class="rating-btn" data-rating="Buena">
+                <img src="https://cdn-icons-png.flaticon.com/512/743/743338.png" alt="Buena">
+                <p>Buena</p>
+            </button>
+        </div>
+        
+        <!-- Btn para ampliar pantalla -->
+        <button id="fullscreen-btn">Ampliar</button>
+    </main>
+
+    <!-- Modal para mostrar la calificación -->
+    <div id="modal" class="modal hidden">
+        <h2 id="modal-title"></h2>
+        <div id="modal-items"></div>
+        <button id="send-btn" class="hidden button">Siguiente</button>
+        <button id="close-btn" class="button">Terminar Encuesta</button>
+    </div>
+
+    <!-- Modal para selección de categoría -->
+    <div id="brand-modal" class="modal hidden">
+        <h2>¿Qué compraste?</h2>
+        <div id="brand-items" class="modal-items"></div> <!-- Asegúrate de agregar la clase rating-grid aquí -->
+        <button id="brand-next-btn" class="button">Siguiente</button>
+        <button id="close-brand-btn" class="button">Terminar Encuesta</button>
+    </div>
+
+
+    <!-- Modal para fuente de conocimiento -->
+    <div id="source-modal" class="modal hidden">
+        <h2>¿Dónde viste el producto?<br>¿Qué motivó tu compra?</h2>
+        <div id="source-items" class="modal-items"></div>
+        <button id="source-next-btn" class="brand-button button">Siguiente</button>
+        <button id="close-source-btn" class="brand-button button">Terminar Encuesta</button>
+    </div>
+
+
+    <!-- Modal para ingresar número de teléfono -->
+    <div id="phone-modal" class="modal hidden">
+        <h2>Ingresa tu número de teléfono</h2>
+        <input type="tel" id="phone-input" maxlength="10" placeholder="Ej: 3765423453">
+        <button id="confirm-phone-btn" class="button">Enviar</button>
+        <button id="close-phone-modal-btn" class="button">Terminar Encuesta</button>
+    </div>
+
+    <!-- Script para manejar la lógica y el Fullscreen-->
+    <script src="./js/app.js" defer></script>
+    <script src="./js/fullscreen.js" defer></script>
+</body>
+</html>

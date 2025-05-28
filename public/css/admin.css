@@ -1,0 +1,119 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  /* Estilos para el contenedor de login (pantalla completa) */
+  #login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245,245,245,0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  #login-container form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  #login-container input {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #login-container button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  #error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+  }
+  /* Estilos del panel de administración */
+  header {
+    margin-bottom: 20px;
+  }
+  nav button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  nav button.active {
+    background-color: #0056b3;
+  }
+  section {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  form input {
+    padding: 8px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  form button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  ul li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  ul li img {
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+  ul li button {
+    margin-left: 5px;
+    padding: 5px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  ul li button.editar {
+    background-color: #ffc107;
+    color: #fff;
+  }
+  ul li button.eliminar {
+    background-color: #dc3545;
+    color: #fff;
+  }

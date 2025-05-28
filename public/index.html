@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="shortcut icon" href="https://tienda.anywayinsumos.com.ar/img/producto-1742-logo-1721508805.jpg" type="image/x-icon">
+  <title>Inicio</title>
+</head>
+<body>
+  <!-- Selección de sucursal -->
+  <div id="branchSelection">
+    <h1>Selecciona una sucursal</h1>
+    <button class="branch-btn">Sucursal principal</button>
+    <button class="branch-btn">Sucursal Itaembé</button>
+    <button id="b2b-btn" class="branch-btn">B2B</button>
+  </div>
+
+  <!-- Selección de perfiles -->
+  <div class="hidden" id="profileSelection">
+    <div class="header-container">
+      <h1>Selecciona un perfil</h1>
+      <button class="back-btn" onclick="toggleViews()">← Volver</button>
+    </div>
+    <!-- Sección para perfiles de sucursales normales -->
+    <main>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743383.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Pablo">Pablo</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743405.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Oscar">Oscar</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743387.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Alan">Alan</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743385.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Joaquin">Joaquín</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743386.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Pony">Pony</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743381.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Mariano">Mariano</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743392.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Facu">Facu</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743393.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Franco">Franco</button>
+      </div>
+    </main>
+    <!-- Sección para perfiles B2B (inicialmente oculta) -->
+    <section class="perfiles-B2B hidden">
+      <div class="tarjeta-seleccion">
+        <!-- Puedes usar la imagen que prefieras para Daniel -->
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743392.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Daniel">Daniel</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <!-- Imagen para Gabriel -->
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743387.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Gabriel">Gabriel</button>
+      </div>
+      <div class="tarjeta-seleccion">
+        <!-- Imagen para Jorge -->
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743385.png" alt="seller-icon">
+        <button class="vendedor-btn" data-id="Jorge">Jorge</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Función para alternar entre la vista de sucursales y la de perfiles
+    function toggleViews() {
+      const branchSection = document.getElementById('branchSelection');
+      const profileSection = document.getElementById('profileSelection');
+      
+      branchSection.classList.toggle('hidden');
+      profileSection.classList.toggle('hidden');
+      
+      // Al volver, nos aseguramos de mostrar la lista principal y ocultar la sección B2B
+      document.querySelector('main').classList.remove('hidden');
+      document.querySelector('.perfiles-B2B').classList.add('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.branch-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          toggleViews();
+          // Si se presionó el botón B2B, ocultamos la lista principal y mostramos solo la sección B2B
+          if (button.id === 'b2b-btn') {
+            document.querySelector('main').classList.add('hidden');
+            document.querySelector('.perfiles-B2B').classList.remove('hidden');
+          } else {
+            document.querySelector('main').classList.remove('hidden');
+            document.querySelector('.perfiles-B2B').classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+  <script src="./js/app.js" defer></script>
+  <script src="./js/redirect.js" defer></script>
+</body>
+</html>

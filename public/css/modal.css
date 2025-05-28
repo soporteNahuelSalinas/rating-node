@@ -1,0 +1,243 @@
+:root {
+    --bgColor: #2831aa;
+    --fontFamily: poppins;
+    --bgColorTarjeta: #414bd8;
+    --bgColorBtn: #5d5ff1;
+    --bgColorBtnHover: #272bfd;
+    --ColorBtn: #fff;
+    --bgBtnCerrar: #f30e25;
+    --bgBtnCerrarHover: #c9182a;
+    --bgItemsModal: #6f0fbe;
+    --bgItemsModalHover: #f1edf1;
+    --modalAnchoMax: 400px;
+    --fuenteFina: 300;
+    --fuenteMedia: 600;
+    --fuenteGruesa: 800;
+    --transitionTime: 0.3s;
+    --BtnFontSize: 2.6vh;
+    --BtnPhoneWidth: 50vh;
+}
+
+body {
+    font-family: var(--fontFamily);
+    background-color: var(--bgColor);
+    color: var(--ColorBtn);
+}
+
+.calificaciones .rating-btn {
+    color: var(--ColorBtn);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calificaciones .rating-btn:hover {
+    background-color: none;
+    transition: var(--transitionTime);
+}
+
+.hidden {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity var(--transitionTime) ease;
+    background-color: rgba(0, 0, 0, 0.897);
+}
+
+.modal.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--bgColorTarjeta);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: var(--modalAnchoMax);
+    text-align: center;
+}
+
+h2 {
+    color: var(--ColorBtn);
+    width: var(--modalAnchoMax);
+    font-size: 3vh;
+    margin: auto;
+}
+
+.modal-content div {
+    margin: 10px 0;
+}
+
+#modal-items {
+    font-size: 2vh;
+    margin-block: 4px;
+}
+
+#modal-items div {
+    background-color: var(--bgItemsModal);
+    padding-block: 8px;
+    font-size: larger;
+    border-radius: 4px;
+    margin-top: 16px;
+}
+
+#modal-items div:hover {
+    background-color: var(--bgItemsModalHover);
+    transition: var(--transitionTime);
+}
+
+#modal-items div label:hover {
+    color: var(--bgItemsModal);
+    font-weight: var(--fuenteMedia);
+    filter: drop-shadow(0 0 1px --bgItemsModal);
+}
+
+#send-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--bgColorBtn);
+    color: var(--ColorBtn);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: var(--BtnFontSize);
+}
+
+#send-btn:hover {
+    background-color: var(--bgColorBtnHover);
+}
+
+#close-btn {
+    padding: 10px 20px;
+    background-color: var(--bgBtnCerrar);
+    color: var(--ColorBtn);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: var(--BtnFontSize);
+}
+
+#close-btn:hover {
+    background-color: var(--bgBtnCerrarHover);
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] + label {
+    font-size: larger;
+    color: #ccc;
+    cursor: pointer;
+}
+
+/* Phone Modal */
+#phone-input {
+    color: rgba(0, 0, 0, 0.897);
+    padding-block: 16px;
+    width: var(--BtnPhoneWidth);
+    border-radius: 4px;
+    border: none;
+    margin: auto;
+    font-size: xx-large;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: var(--fuenteMedia);
+    margin-bottom: 8px;
+    margin-top: 12px;
+}
+
+#confirm-phone-btn,
+#brand-next-btn,
+#source-next-btn {
+    background-color: var(--bgColorTarjeta);
+    width: var(--BtnPhoneWidth);
+    font-size: var(--BtnFontSize);
+}
+
+#confirm-phone-btn:hover {
+    background-color: var(--bgColor);
+}
+
+#close-phone-modal-btn,
+#close-brand-btn,
+#close-source-btn {
+    width: var(--BtnPhoneWidth);
+    font-size: var(--BtnFontSize);
+    background-color: var(--bgBtnCerrar);
+}
+
+#close-phone-modal-btn:hover {
+    background-color: var(--bgBtnCerrarHover);
+}
+
+#brand-items label {
+    font-size: xx-large;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#brand-items option {
+    background-color: #272bfd;
+}
+
+/* Estilos mejorados para el modal de fuentes */
+#source-modal select, #brand-items select {
+    width: var(--BtnPhoneWidth);
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--bgColorTarjeta);
+    border: none;
+    font-size: x-large;
+    margin-top: 10px;
+    color: var(--ColorBtn);
+}
+
+    #source-modal label{
+        font-size: large;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #source-modal h2, #brand-modal h2, #phone-modal h2 {
+        font-size: 3.5vh;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+/* Botones de los select */
+#source-next-btn, #close-source-btn{
+    color: var(--ColorBtn);
+    margin-top: 12px;
+    width: var(--BtnPhoneWidth);
+}
+
+    #source-next-btn:hover, #close-source-btn:hover{
+        transform:scale(.99);
+        transition: var(--transitionTime);
+    }
+    
+    #source-next-btn:hover{
+        background-color: var(--bgColorBtnHover);
+    }
+
+    #close-source-btn:hover{
+        background-color: var(--bgBtnCerrarHover);
+    }

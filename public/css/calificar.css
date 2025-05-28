@@ -1,0 +1,74 @@
+:root{
+    --bgColorTarjeta: #414bd8;
+    --bgColorBtn: #9ceb42;
+    --ColorBtn: #fff;
+    --fuenteFina: 300;
+    --fuenteMedia: 600;
+    --fuenteGruesa: 800;
+}
+
+header{
+    text-align: center;
+    justify-content: center;
+    color: var(--ColorBtn);
+    letter-spacing: 1px;
+}
+
+    #mensaje-display{
+        padding-top: 2vh;
+        font-weight: var(--fuenteMedia);
+        border-radius: .3em;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: larger;
+        filter: drop-shadow(1px 1px 14px rgba(34, 49, 17, 0.63));
+    }
+
+    #vendedor-display{
+        color: var(--bgColorBtn);
+    }
+
+.calificaciones{
+    padding-top: 4vh;
+    width: fit-content;
+    margin: auto;
+}
+
+    .calificaciones .rating-btn{
+        background-color: #0000;
+        border: none;
+        color: var(--ColorBtn);
+        font-weight: var(--fuenteMedia);
+        letter-spacing: 1px;
+        transition: transform 0.3s ease;
+    }
+
+    .rating-btn:hover{
+        transform: scale(1.02);
+        filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.26));
+    }
+
+    .rating-btn p{
+        font-size: 2.5vh;
+    }
+
+    img {
+        width: 13vh;
+        height: 13vh;
+        object-fit: cover;
+        margin-bottom: 1vh;
+        margin: auto;
+    }
+
+    /* Botón de pantalla completa */
+    #fullscreen-btn{
+        background-color: var(--bgColorTarjeta);
+        color: var(--ColorBtn);
+        padding: 4px 14px 4px 14px;
+        border-radius: 4px;
+        opacity: .8;
+        border: none;
+        margin: auto;
+        display: grid;
+        margin-top: 24vh;
+    }
