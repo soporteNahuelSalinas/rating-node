@@ -86,21 +86,13 @@ const phoneInput = document.getElementById('phone-input');
 const confirmPhoneBtn = document.getElementById('confirm-phone-btn');
 const closePhoneModalBtn = document.getElementById('close-phone-modal-btn');
 
-// Variables de seguimiento\let nivelSeleccionado = null;
+// Variables de seguimiento
+let nivelSeleccionado = null;
 let itemSeleccionado = null;
 let marcaSeleccionada = null;
 let fuenteSeleccionada = null;
 let telefonoIngresado = null;
 let inactivityTimer = null;
-
-brandNextBtn.addEventListener('click', () => {
-    clearTimeout(inactivityTimer);
-    mostrarSourceModal();
-});
-sourceNextBtn.addEventListener('click', () => {
-    clearTimeout(inactivityTimer);
-    mostrarPhoneModal();
-});
 
 // Mensaje de encabezado
 const vendedorSeleccionado = localStorage.getItem('vendedorSeleccionado') || 'Vendedor No Seleccionado';
@@ -110,7 +102,7 @@ if (header) header.innerHTML = `<h1>¡No olvides calificar a ${vendedorSeleccion
 // Inactividad
 function iniciarInactividad() {
     clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => cerrarModalesPorInactividad(), 60000);
+    inactivityTimer = setTimeout(cerrarModalesPorInactividad, 60000);
 }
 
 function cerrarModalesPorInactividad() {
@@ -131,50 +123,61 @@ function mostrarModal(nivel) {
             <label for="item-${idx}">${it}</label>
         </div>`
     ).join('');
-    closeBtn.classList.remove('hidden'); sendBtn.classList.add('hidden');
-    modal.classList.add('visible'); iniciarInactividad();
+    closeBtn.classList.remove('hidden');
+    sendBtn.classList.add('hidden');
+    modal.classList.add('visible');
+    iniciarInactividad();
 }
 
 function mostrarBrandModal() {
     clearTimeout(inactivityTimer);
-    brandItems.innerHTML = `<label for="brand-select">Selecciona una categoría:</label>
+    brandItems.innerHTML = `
+        <label for="brand-select">Selecciona una categoría:</label>
         <select id="brand-select">
             <option value="" disabled selected>Seleccioná</option>
             ${categorias.map(c => `<option value="${c}">${c}</option>`).join('')}
         </select>`;
-    brandModal.classList.add('visible'); iniciarInactividad();
-    document.getElementById('brand-select').addEventListener('change', function() {
-        marcaSeleccionada = this.value;
+    brandModal.classList.add('visible');
+
+    document.getElementById('brand-select').addEventListener('change', function () {
+        marcaSeleccionada = this.value || 'No seleccionada';
         brandModal.classList.remove('visible');
         mostrarSourceModal();
     });
+
+    iniciarInactividad();
 }
 
 function mostrarSourceModal() {
     clearTimeout(inactivityTimer);
-    sourceItems.innerHTML = `<select id="source-select">
-            <option value="" disabled selected>Selecciona una opción</option>
+    sourceItems.innerHTML = `
+        <label for="source-select">Selecciona una opción:</label>
+        <select id="source-select">
+            <option value="" disabled selected>Selecciona</option>
             ${fuentes.map(f => `<option value="${f}">${f}</option>`).join('')}
         </select>`;
-    sourceModal.classList.add('visible'); iniciarInactividad();
-    document.getElementById('source-select').addEventListener('change', function() {
-        fuenteSeleccionada = this.value;
+    sourceModal.classList.add('visible');
+
+    document.getElementById('source-select').addEventListener('change', function () {
+        fuenteSeleccionada = this.value || 'No seleccionada';
         sourceModal.classList.remove('visible');
         mostrarPhoneModal();
     });
+
+    iniciarInactividad();
 }
 
 function mostrarPhoneModal() {
     clearTimeout(inactivityTimer);
     phoneInput.value = '';
     closePhoneModalBtn.style.display = 'none';
-    phoneModal.classList.add('visible'); iniciarInactividad();
+    phoneModal.classList.add('visible');
+    iniciarInactividad();
 }
 
 // Enviar datos al backend
 function enviarDatos(telefono = null, force = false) {
     clearTimeout(inactivityTimer);
-    // Validación: categoría/fuente solo para no-Mala
     if (!force && nivelSeleccionado !== 'Mala' && (!marcaSeleccionada || !fuenteSeleccionada)) {
         alert('Selecciona categoría y fuente antes.');
         return;
@@ -194,17 +197,16 @@ function enviarDatos(telefono = null, force = false) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     })
-    .then(res => {
-        mostrarAgradecimiento();
-    })
-    .catch(() => mostrarAgradecimiento());
+        .then(() => mostrarAgradecimiento())
+        .catch(() => mostrarAgradecimiento());
 }
 
 function mostrarAgradecimiento() {
     clearTimeout(inactivityTimer);
     modalTitle.textContent = '¡Gracias por tu feedback!';
     modalItems.innerHTML = '';
-    closeBtn.classList.add('hidden'); sendBtn.classList.add('hidden');
+    closeBtn.classList.add('hidden');
+    sendBtn.classList.add('hidden');
     modal.classList.add('visible');
     setTimeout(() => modal.classList.remove('visible'), 3000);
     resetearDatos();
@@ -216,27 +218,33 @@ function resetearDatos() {
 }
 
 // Listeners
-ratingButtons.forEach(btn => btn.addEventListener('click', () => {
-    clearTimeout(inactivityTimer);
-    nivelSeleccionado = btn.dataset.rating;
-    if (nivelSeleccionado === 'Mala') {
-        // Para mala, primero preguntar detalle
-        mostrarPhoneModal();
-    } else {
-        mostrarModal(nivelSeleccionado);
-    }
-}));
 
-closeBtn.addEventListener('click', () => { modal.classList.remove('visible'); enviarDatos(null, true); });
+// Rating inicial
+ratingButtons.forEach(btn =>
+    btn.addEventListener('click', () => {
+        clearTimeout(inactivityTimer);
+        nivelSeleccionado = btn.dataset.rating;
+        if (nivelSeleccionado === 'Mala') {
+            mostrarPhoneModal();
+        } else {
+            mostrarModal(nivelSeleccionado);
+        }
+    })
+);
 
-// Al seleccionar un ítem en el modal de nivel
+// Cierre manual del modal principal
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('visible');
+    enviarDatos(null, true);
+});
+
+// Selección automática en modal de detalle
 modalItems.addEventListener('change', e => {
     if (e.target.name === 'item') {
         clearTimeout(inactivityTimer);
         itemSeleccionado = e.target.value;
         modal.classList.remove('visible');
         if (nivelSeleccionado === 'Mala') {
-            // Después del detalle para "Mala", pedir teléfono
             mostrarPhoneModal();
         } else {
             mostrarBrandModal();
@@ -244,7 +252,35 @@ modalItems.addEventListener('change', e => {
     }
 });
 
-// Confirmar teléfono y enviar (para todos los casos)
+// BRAND: Siguiente (avanza siempre)
+brandNextBtn.addEventListener('click', () => {
+    clearTimeout(inactivityTimer);
+    const select = document.getElementById('brand-select');
+    marcaSeleccionada = select && select.value ? select.value : 'No seleccionada';
+    brandModal.classList.remove('visible');
+    mostrarSourceModal();
+});
+
+// Cerrado Brand
+closeBrandBtn.addEventListener('click', () => {
+    cerrarModalesPorInactividad();
+});
+
+// SOURCE: Siguiente (avanza siempre)
+sourceNextBtn.addEventListener('click', () => {
+    clearTimeout(inactivityTimer);
+    const select = document.getElementById('source-select');
+    fuenteSeleccionada = select && select.value ? select.value : 'No seleccionada';
+    sourceModal.classList.remove('visible');
+    mostrarPhoneModal();
+});
+
+// Cerrado Source
+closeSourceBtn.addEventListener('click', () => {
+    cerrarModalesPorInactividad();
+});
+
+// PHONE: Confirmar y enviar
 confirmPhoneBtn.addEventListener('click', () => {
     clearTimeout(inactivityTimer);
     telefonoIngresado = phoneInput.value.trim() || null;
@@ -252,8 +288,7 @@ confirmPhoneBtn.addEventListener('click', () => {
     enviarDatos(telefonoIngresado);
 });
 
-
-// Cierre manual del modal de teléfono: también envía
+// PHONE: Cerrar manual y enviar
 closePhoneModalBtn.addEventListener('click', () => {
     clearTimeout(inactivityTimer);
     telefonoIngresado = phoneInput.value.trim() || null;
@@ -261,43 +296,13 @@ closePhoneModalBtn.addEventListener('click', () => {
     enviarDatos(telefonoIngresado);
 });
 
-// Botón "Siguiente" en Brand
-brandNextBtn.addEventListener('click', ()=>{
-    const select = document.getElementById('brand-select');
-    if (select && select.value) {
-        marcaSeleccionada = select.value;
-        brandModal.classList.remove('visible');
-        mostrarSourceModal();
-    } else alert('Selecciona una categoría');
-});
-// Terminar en Brand
-closeBrandBtn.addEventListener('click', ()=>{ cerrarModales(true); });
-// Botón "Siguiente" en Source
-sourceNextBtn.addEventListener('click', ()=>{
-    const select = document.getElementById('source-select');
-    if (select && select.value) {
-        fuenteSeleccionada = select.value;
-        sourceModal.classList.remove('visible');
-        mostrarPhoneModal();
-    } else alert('Selecciona una opción');
-});
-// Terminar en Source
-closeSourceBtn.addEventListener('click', ()=>{ cerrarModales(true); });
-// Confirmar Teléfono y enviar
-confirmPhoneBtn.addEventListener('click', ()=>{
-    clearTimeout(inactivityTimer);
-    telefonoIngresado = phoneInput.value.trim()||null;
-    phoneModal.classList.remove('visible');
-    enviarDatos(telefonoIngresado);
-});
-// Terminar en Phone
-closePhoneModalBtn.addEventListener('click', ()=>{ cerrarModales(true); });
-
-
-// Wake Lock\ n
+// Wake Lock
 let wakeLock = null;
 async function activarWakeLock() {
-    try { wakeLock = await navigator.wakeLock.request('screen'); }
-    catch (err) { console.error('WakeLock error:', err); }
+    try {
+        wakeLock = await navigator.wakeLock.request('screen');
+    } catch (err) {
+        console.error('WakeLock error:', err);
+    }
 }
 activarWakeLock();

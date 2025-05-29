@@ -31,6 +31,22 @@ router.post('/', async (req, res) => {
     // Asegurar que telefono no sea null para evitar errores de restricción
     const telefonoInsert = telefono || '';
 
+    function getArgentinaISOString() {
+      const local = new Date().toLocaleString('en-US', {
+        timeZone: 'America/Argentina/Cordoba'
+      });
+      const dt = new Date(local);
+      const pad = n => String(n).padStart(2, '0');
+      const year   = dt.getFullYear();
+      const month  = pad(dt.getMonth() + 1);
+      const day    = pad(dt.getDate());
+      const hour   = pad(dt.getHours());
+      const minute = pad(dt.getMinutes());
+      const second = pad(dt.getSeconds());
+      const milli  = String(dt.getMilliseconds()).padStart(3, '0');
+      return `${year}-${month}-${day}T${hour}:${minute}:${second}.${milli}-03:00`;
+    }
+
     const { data, error: supaError } = await supabase
       .from('encuestas')
       .insert([
@@ -43,7 +59,7 @@ router.post('/', async (req, res) => {
           fuente: fuente || null,
           telefono: telefonoInsert,
           canal,
-          fecha: new Date().toISOString()
+          fecha: getArgentinaISOString()
         }
       ]);
 
